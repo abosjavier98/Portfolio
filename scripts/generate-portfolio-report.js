@@ -5,9 +5,7 @@ const path = require("path");
 const chalk = require("chalk");
 
 async function generatePortfolioReport() {
-  console.log(
-    chalk.blue("🚀 Generating Test Automation Portfolio Report...\n")
-  );
+  console.log(chalk.blue("Generating Test Automation Portfolio Report...\n"));
 
   const reportData = {
     portfolioInfo: {
@@ -193,7 +191,7 @@ function generateHtmlReport(data) {
         
         <div class="meta-info">
             <div class="meta-card">
-                <h3>👨 Author</h3>
+                <h3>Author</h3>
                 <p>${data.portfolioInfo.author}</p>
             </div>
             <div class="meta-card">

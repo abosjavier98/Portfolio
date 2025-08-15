@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🎭 Setting up Test Automation Portfolio..."
+echo "Setting up Test Automation Portfolio..."
 echo "=================================================="
 
 # Colors for output
@@ -94,17 +94,16 @@ if [ -d "performance-testing" ]; then
   cd performance-testing
   npm install
 
-# Check if K6 is installed globally
-if ! command -v k6 &> /dev/null; then
+  # Check if K6 is installed globally
+  if ! command -v k6 &> /dev/null; then
     print_warning "K6 is not installed globally. Please install K6 manually:"
     print_warning "  Linux/Mac: curl https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -L | tar xvz --strip-components 1"
     print_warning "  Windows: choco install k6"
     print_warning "  Or visit: https://k6.io/docs/getting-started/installation/"
-else
+  else
     print_success "K6 $(k6 version --quiet) is installed"
-fi
+  fi
 
-if [ -d "performance-testing" ]; then
   print_success "Performance Testing Suite setup complete"
   cd ..
 else
