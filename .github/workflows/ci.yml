@@ -1,0 +1,150 @@
+name: Test Automation Portfolio CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run tests daily at 6 AM UTC
+    - cron: "0 6 * * *"
+
+jobs:
+  smoke-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install project dependencies
+        run: npm run install:all
+
+      - name: Install Playwright browsers
+        run: |
+          cd playwright-cucumber
+          # Only install Chrome and Firefox to save CI time
+          npx playwright install chromium firefox
+
+      - name: Run Playwright smoke tests
+        run: |
+          cd playwright-cucumber
+          npm run test:smoke
+
+      - name: Run Cypress smoke tests (Chrome)
+        run: |
+          cd cypress
+          npm run cy:run
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-node-${{ matrix.node-version }}
+          path: |
+            playwright-cucumber/reports/
+            cypress/cypress/videos/
+            cypress/cypress/screenshots/
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: smoke-tests
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci && npm run install:all
+
+      - name: Install Playwright browsers
+        run: |
+          cd playwright-cucumber
+          # Install Chrome and Firefox for cross-browser testing
+          npx playwright install chromium firefox
+
+      - name: Run Playwright E2E tests (Chrome)
+        run: |
+          cd playwright-cucumber
+          npm run test:regression
+
+      - name: Run Cypress E2E tests (Chrome)
+        run: |
+          cd cypress
+          npm run cy:run:chrome
+
+      - name: Upload E2E test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-test-results
+          path: |
+            playwright-cucumber/reports/
+            cypress/cypress/videos/
+
+  generate-report:
+    runs-on: ubuntu-latest
+    needs: [e2e-tests]
+    if: always()
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download all test results
+        uses: actions/download-artifact@v4
+        with:
+          path: test-artifacts/
+
+      - name: Generate portfolio report
+        run: npm run report
+
+      - name: Upload portfolio report
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-report
+          path: reports/
+
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./reports
+
+  notify-results:
+    runs-on: ubuntu-latest
+    needs: [generate-report]
+    if: always()
+
+    steps:
+      - name: Notify test completion
+        run: |
+          echo " Test Automation Portfolio CI completed"
+          echo " Results: ${{ needs.generate-report.result }}"
+          echo " Check artifacts for detailed reports"

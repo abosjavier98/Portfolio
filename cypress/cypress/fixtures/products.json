@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "ThinkPad X1 Carbon",
+    "price": 1299.99,
+    "category": "laptop",
+    "image": "/images/laptop-1.jpg",
+    "description": "Business ultrabook with excellent keyboard and build quality",
+    "stock": 15,
+    "rating": 4.6
+  },
+  {
+    "id": 2,
+    "name": "MacBook Pro 14-inch",
+    "price": 1999.99,
+    "category": "laptop",
+    "image": "/images/laptop-2.jpg",
+    "description": "Apple's professional laptop with M2 Pro chip",
+    "stock": 8,
+    "rating": 4.8
+  },
+  {
+    "id": 3,
+    "name": "iPhone 15 Pro",
+    "price": 1099.99,
+    "category": "smartphone",
+    "image": "/images/phone-1.jpg",
+    "description": "Latest iPhone with titanium design and USB-C",
+    "stock": 22,
+    "rating": 4.7
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy S24 Ultra",
+    "price": 1199.99,
+    "category": "smartphone",
+    "image": "/images/phone-2.jpg",
+    "description": "Android flagship with S Pen and AI features",
+    "stock": 12,
+    "rating": 4.5
+  }
+]

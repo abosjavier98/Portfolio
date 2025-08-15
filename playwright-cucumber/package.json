@@ -1,0 +1,25 @@
+{
+  "name": "playwright-cucumber-suite",
+  "version": "1.0.0",
+  "description": "Playwright + Cucumber BDD Test Suite",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:headed": "HEADLESS=false cucumber-js --parallel 1",
+    "test:debug": "HEADLESS=false cucumber-js --tags @debug",
+    "test:smoke": "cucumber-js --tags @smoke",
+    "test:regression": "cucumber-js --tags @regression",
+    "test:chrome": "BROWSER=chromium cucumber-js",
+    "test:firefox": "BROWSER=firefox cucumber-js",
+    "report": "node scripts/generate-report.js",
+    "install:browsers": "npx playwright install chromium firefox"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.0.1",
+    "@playwright/test": "^1.40.0",
+    "cucumber-html-reporter": "^7.1.1",
+    "fs-extra": "^11.1.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}

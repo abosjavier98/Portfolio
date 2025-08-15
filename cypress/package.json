@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-testing-suite",
+  "version": "2.1.0",
+  "description": "Comprehensive Cypress testing suite for e-commerce applications",
+  "scripts": {
+    "test": "cypress run --browser chrome",
+    "test:open": "cypress open",
+    "test:demo": "cypress run --headed --browser chrome --spec 'cypress/e2e/shopping-demo.cy.js'",
+    "test:mobile": "cypress run --browser chrome --spec 'cypress/e2e/mobile-tests.cy.js'",
+    "test:mobile:open": "cypress open --config viewportWidth=430,viewportHeight=932",
+    "start": "cypress open"
+  },
+  "dependencies": {
+    "cypress": "^13.6.0"
+  },
+  "devDependencies": {
+    "@cypress/webpack-preprocessor": "^6.0.1"
+  }
+}

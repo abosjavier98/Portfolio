@@ -1,0 +1,34 @@
+{
+  "name": "PortfolioAbosJavier",
+  "version": "1.0.0",
+  "description": "Test automation portfolio with Playwright and Cypress implementations using BDD and E2E approaches",
+  "scripts": {
+    "test:playwright": "cd playwright-cucumber && npm test",
+    "test:cypress": "cd cypress && npm test",
+    "test:mobile": "cd cypress && npm run test:mobile",
+    "test:mobile:open": "cd cypress && npm run test:mobile:open",
+    "test:all": "npm run test:playwright && npm run test:cypress",
+    "test:firefox": "cd playwright-cucumber && npm run test:firefox",
+    "install:all": "npm run install:playwright && npm run install:cypress",
+    "install:playwright": "cd playwright-cucumber && npm install",
+    "install:cypress": "cd cypress && npm install",
+    "setup": "npm run install:all",
+    "report": "node scripts/generate-portfolio-report.js"
+  },
+  "keywords": [
+    "test-automation",
+    "playwright",
+    "cypress",
+    "api-testing",
+    "performance-testing",
+    "qa",
+    "testing",
+    "portfolio"
+  ],
+  "author": "Javier Abós Abroj",
+  "license": "MIT",
+  "devDependencies": {
+    "fs-extra": "^11.1.1",
+    "chalk": "^4.1.2"
+  }
+}
