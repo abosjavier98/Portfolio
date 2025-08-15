@@ -1,5 +1,5 @@
 {
-  "name": "playwright-cucumber-suite",
+  "name": "playwright-cucumber",
   "version": "1.0.0",
   "description": "Playwright + Cucumber BDD Test Suite",
   "scripts": {

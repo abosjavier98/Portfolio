@@ -48,8 +48,8 @@ Features:
 ### Installation
 
 ```bash
-git clone <repository-url>
-cd test-automation-portfolio
+git clone https://github.com/abosjavier98/Portfolio.git
+cd Portfolio
 
 # Run setup script
 ./setup.sh
