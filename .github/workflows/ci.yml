@@ -9,16 +9,13 @@ on:
     # Run tests daily at 6 AM UTC
     - cron: "0 6 * * *"
 
-# Permissions for GitHub Pages deployment
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Prevent multiple deployments running at the same time
+# Prevent concurrent runs
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   smoke-tests:
@@ -138,24 +135,6 @@ jobs:
         with:
           name: portfolio-report
           path: reports/
-
-      - name: Setup Pages
-        if: github.ref == 'refs/heads/master'
-        uses: actions/configure-pages@v4
-        with:
-          enablement: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload pages artifact
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./reports
-
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/master'
-        id: deployment
-        uses: actions/deploy-pages@v4
 
   notify-results:
     runs-on: ubuntu-latest
