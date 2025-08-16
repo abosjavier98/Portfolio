@@ -37,13 +37,14 @@ print_status "Checking prerequisites..."
 
 # Check Node.js
 if ! command -v node &> /dev/null; then
-    print_error "Node.js is not installed. Please install Node.js v16 or higher."
+    print_error "Node.js is not installed. Please install Node.js v18 or higher."
     exit 1
 fi
 
 NODE_VERSION=$(node --version | cut -d'v' -f2 | cut -d'.' -f1)
-if [ "$NODE_VERSION" -lt 16 ]; then
-    print_error "Node.js version 16 or higher is required. Current version: $(node --version)"
+if [ "$NODE_VERSION" -lt 18 ]; then
+    print_error "Node.js version 18 or higher is required. Current version: $(node --version)"
+    print_error "Playwright requires Node.js 18+. Please update your Node.js installation."
     exit 1
 fi
 
