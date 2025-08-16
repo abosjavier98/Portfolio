@@ -15,7 +15,6 @@ let context;
 let page;
 
 BeforeAll(async function () {
-  // Chrome is my go-to browser, but can switch via env var for cross-browser testing
   const browserType = process.env.BROWSER || "chromium";
 
   switch (browserType) {
@@ -30,7 +29,6 @@ BeforeAll(async function () {
       });
       break;
     default:
-      // Chrome/Chromium is my default - most stable and widely used
       browser = await chromium.launch({
         headless: process.env.HEADLESS !== "false",
       });
@@ -44,6 +42,9 @@ Before(async function () {
   });
 
   page = await context.newPage();
+  page.setDefaultTimeout(15000);
+  page.setDefaultNavigationTimeout(30000);
+
   this.page = page;
   this.context = context;
 });

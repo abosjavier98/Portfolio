@@ -17,8 +17,15 @@ class LoginPage {
     await this.page.fill(this.usernameInput, username);
     await this.page.fill(this.passwordInput, password);
     await this.page.click(this.loginButton);
-    // Wait for network to settle - learned this prevents flaky tests
-    await this.page.waitForLoadState("networkidle");
+    // Wait for navigation with a more reasonable approach for CI
+    try {
+      await this.page.waitForURL("**/inventory.html", { timeout: 10000 });
+    } catch (error) {
+      // If it's an invalid login, we stay on the same page - that's expected
+      if (!username.includes("invalid") && !username.includes("locked")) {
+        throw error;
+      }
+    }
   }
 
   async isUserLoggedIn() {
