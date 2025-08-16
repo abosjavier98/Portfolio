@@ -8,6 +8,10 @@
     "test:demo": "cypress run --headed --browser chrome --spec 'cypress/e2e/shopping-demo.cy.js'",
     "test:mobile": "cypress run --browser chrome --spec 'cypress/e2e/mobile-tests.cy.js'",
     "test:mobile:open": "cypress open --config viewportWidth=430,viewportHeight=932",
+    "test:smoke": "cypress run --browser chrome --spec 'cypress/e2e/basic-tests.cy.js'",
+    "test:regression": "cypress run --browser chrome",
+    "cy:run": "cypress run --browser chrome",
+    "cy:run:chrome": "cypress run --browser chrome",
     "start": "cypress open"
   },
   "dependencies": {

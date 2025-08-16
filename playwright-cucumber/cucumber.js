@@ -9,7 +9,6 @@ module.exports = {
     formatOptions: {
       snippetInterface: "async-await",
     },
-    publishQuiet: true,
     parallel: 2,
   },
 };
